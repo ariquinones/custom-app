@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Tiptap from './components/Tiptap'
 
 type SearchParams = { [key: string]: string | string[] | undefined }
-const apiKey = process.env.COPILOT_API_KEY || 'mrxjUcATxC318kFpCrZBHVBNvsSbWf3xGQM4j4j0'
+const apiKey = process.env.COPILOT_API_KEY;
 async function getContent(searchParams: SearchParams) {
   if (!apiKey) {
     throw new Error('Missing COPILOT_API_KEY')
