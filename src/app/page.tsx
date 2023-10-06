@@ -1,17 +1,21 @@
 import { Client, Company, CopilotAPI } from '@/utils/copilotApiUtils'
 import Image from 'next/image'
+import Tiptap from './components/Tiptap'
 
 type SearchParams = { [key: string]: string | string[] | undefined }
-
+const apiKey = process.env.COPILOT_API_KEY || 'mrxjUcATxC318kFpCrZBHVBNvsSbWf3xGQM4j4j0'
 async function getContent(searchParams: SearchParams) {
-  if (!process.env.COPILOT_API_KEY) {
+  if (!apiKey) {
     throw new Error('Missing COPILOT_API_KEY')
   }
 
-  const copilotAPI = new CopilotAPI(process.env.COPILOT_API_KEY)
+  const copilotAPI = new CopilotAPI(apiKey)
+  const response = await copilotAPI.me()
+  console.log("RESPONSE ", response);
   const result: { client?: Client, company?: Company } = {};
 
   if (searchParams.clientId && typeof searchParams.clientId === 'string') {
+    console.log('make reuest')
     result.client = await copilotAPI.getClient(searchParams.clientId)
   }
 
@@ -23,7 +27,11 @@ async function getContent(searchParams: SearchParams) {
 }
 
 export default async function Page({ searchParams }:  { searchParams: SearchParams }) {
+  console.log("PAGE")
+ searchParams["clientId"] = "b7a439a9-77a1-43c8-9ea2-8bff85e3ce51";
+  console.log(searchParams)
   const data = await getContent(searchParams)
+  console.log(data)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -61,8 +69,9 @@ export default async function Page({ searchParams }:  { searchParams: SearchPara
           priority
         />
       </div>
+      <Tiptap />
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
+      {/* <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
           href="https://docs.copilot.com/reference/introduction"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -130,7 +139,7 @@ export default async function Page({ searchParams }:  { searchParams: SearchPara
             Read the details in the repo docs to learn how to deploy.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
   )
 }

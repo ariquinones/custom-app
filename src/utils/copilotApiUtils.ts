@@ -1,4 +1,5 @@
-const BaseApiURL = 'https://api-beta.copilot.com/v1'
+// const BaseApiURL = 'https://api-beta.copilot.com/v1'
+const BaseApiURL = 'https://cedow0qefc.execute-api.us-east-1.amazonaws.com/ari/v1'
 
 type MeResponse = {
     givenName: string
