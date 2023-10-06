@@ -1,6 +1,7 @@
 import { Client, Company, CopilotAPI } from '@/utils/copilotApiUtils'
 import Image from 'next/image'
-import Tiptap from './components/Tiptap'
+import Tiptap from './components/tiptap';
+
 
 type SearchParams = { [key: string]: string | string[] | undefined }
 const apiKey = process.env.COPILOT_API_KEY;
